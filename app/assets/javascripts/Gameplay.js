@@ -27,6 +27,13 @@ GLOBE.Gameplay.prototype.reset = function() {
 		}
 
 		node.unit=null;
+		this.network[i].resource = null;
+	}
+
+	for(i=0; i<this.network.length; i++){
+		pn = PerlinNoise.noise(this.network[i].position.x, this.network[i].position.y, this.network[i].position.z);
+		pn = Math.cos(pn * 85);
+		this.network[i].resource = Math.round(( (pn * 255) + 255 ));
 	}
 }
 
