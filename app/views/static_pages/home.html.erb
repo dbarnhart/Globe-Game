@@ -1,23 +1,25 @@
 <% provide(:title, 'Home') %>
 <div>
-  <div style="text-align:right">Manufactured Goods: <span id="manufactured-goods">0</span> |||||| Pollution: <span id="pollution">0</span></div>
+  <div id="status-bar" style="text-align:right; display:none">Manufactured Goods: <span id="manufactured-goods", style="padding-right:40px">0</span>  Pollution: <span id="pollution">0</span></div>
 	<%= link_to "Start the Game!", '#', id: "start-button", class: "start_button button orange" %>
 	<div id="view-element", style="display:none"></div>
 </div>
 <script>
-  var camera, scene, renderer,
-  geometry, material, globe;
+  var camera, scene, renderer, geometry, material, globe;
   var trackball, projector;
   var windowWidth=670, windowHeight=400;
   var network, gameplay;
   var viewer = $('#view-element').get(0);
+  var lastTime;
 
   $('#start-button').click(function() {
   	init();
   	$('#view-element').append(renderer.domElement);
   	$('#start-button').fadeOut('fast');
   	$('#view-element').show('slow');
-  	animate();
+    $('#status-bar').fadeIn('slow');
+    lastTime = +new Date;
+  	queueFrame();
   });
 
   function closestVertex(face, point, vertices) {
@@ -70,6 +72,7 @@
       camera.add(pointLight);
 
       var ambientLight = new THREE.AmbientLight(0x777777);
+      ambientLight
       scene.add(ambientLight);
 
       projector = new THREE.Projector();
@@ -108,22 +111,27 @@
       }, false);
   }
 
-  function animate() {
-      // note: three.js includes requestAnimationFrame shim
-      requestAnimationFrame( animate );
-      trackball.update();
-      gameplay.update();
-
-      $('#manufactured-goods').text(gameplay.state.manufactured_goods);
-      $('#pollution').text(gameplay.state.pollution);
-
-      render();
+  function queueFrame() {
+    // note: three.js includes requestAnimationFrame shim
+      requestAnimationFrame( queueFrame );
+      var currentTime = +new Date;
+      var timestep = (currentTime - lastTime)/1000.0;
+      if(timestep > 0.160) return;
+      update(timestep);
+      render(timestep);
+      lastTime=currentTime;
   }
 
-  function render() {
-      //mesh.rotation.x += 0.01;
-      //mesh.rotation.y += 0.02;
+  function update(timestep) {
+      
+      trackball.update();
+      gameplay.update(timestep);
 
+      $('#manufactured-goods').text(Math.floor(gameplay.state.manufactured_goods));
+      $('#pollution').text(Math.ceil(gameplay.state.pollution));
+  }
+
+  function render(timestep) {
       renderer.render( scene, camera );
   }
 </script>

@@ -7,20 +7,16 @@ GLOBE.Gameplay = function(network, scene) {
 
 	this.units = { factory: new GLOBE.FactoryUnit() };
 
-	//amount of manufactured goods required to build various things
-	this.FactoryCost = 10;
-	this.SpaceCost = 1000;
-
 	this.reset();
 };
 
-GLOBE.Gameplay.prototype.constructor = GLOBE.Gameplay;
+//GLOBE.Gameplay.prototype.constructor = GLOBE.Gameplay;
 
 GLOBE.Gameplay.prototype.reset = function() {
 	this.state = {
-		pollution: 0, //planetary pollution
+		pollution: 0.0, //planetary pollution
 		//current stock of manufactured goods
-		manufactured_goods: Math.round(1.5*this.units.factory.cost)
+		manufactured_goods: 1.5*this.units.factory.cost
 	};
 
 	for(i=0; i<this.network.length; i++) {
@@ -48,10 +44,10 @@ GLOBE.Gameplay.prototype.handlePlacement = function(placement) {
 	}
 };
 
-GLOBE.Gameplay.prototype.update = function() {
+GLOBE.Gameplay.prototype.update = function(timestep) {
 	for(i=0; i<this.network.length; i++) {
 		var node = this.network[i];
 		if(node.unit == null)	continue;
-		node.unit.update(this.state, this.scene);
+		node.unit.update(timestep, this.state, this.scene);
 	}
 }
