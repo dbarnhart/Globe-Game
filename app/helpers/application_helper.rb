@@ -7,8 +7,4 @@ module ApplicationHelper
 			"#{base_title} | #{page_title}"
 		end
 	end
-
-	def static_page_path(page)
-		"/pages/" + page
-	end
 end

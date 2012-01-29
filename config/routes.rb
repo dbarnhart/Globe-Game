@@ -1,6 +1,6 @@
 RailsTest::Application.routes.draw do
   root :to => 'static_pages#show', :page => 'home'
-  match 'pages/:page' => 'static_pages#show', :via => :get, :page => /home|about|help/
+  match ':page' => 'static_pages#show', :via => :get, :page => /home|about|help|contact/, :as => "page"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
