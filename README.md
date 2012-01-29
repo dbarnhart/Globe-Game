@@ -1,8 +1,4 @@
-# Ruby on Rails Tutorial: sample application
+# Globe Game
+## A game for the Global Game Jam 2012
 
-This is the sample application for
-[*Ruby on Rails Tutorial: Learn Rails by Example*](http://railstutorial.org/)
-by [Michael Hartl](http://michaelhartl.com/)
-
-Please ignore
-=============
+Build an empire and colonize another world... before this one is consumed.
