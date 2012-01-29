@@ -51,9 +51,9 @@ GLOBE.FactoryUnit = function() {
 		this.joins = [];
 	}
 
-	this.place = fuction(node, state, scene) {
-		//if(node.)
-	};
+	//this.place = function(node, state, scene) {
+	//	return this.supr.place(node, state, scene);
+	//};
 };
 
 GLOBE.FactoryUnit.prototype = new GLOBE.Unit();

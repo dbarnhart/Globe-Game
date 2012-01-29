@@ -10,7 +10,7 @@ GLOBE.Gameplay = function(network, scene) {
 	this.reset();
 };
 
-//GLOBE.Gameplay.prototype.constructor = GLOBE.Gameplay;
+GLOBE.Gameplay.prototype.constructor = GLOBE.Gameplay;
 
 GLOBE.Gameplay.prototype.reset = function() {
 	this.state = {
@@ -30,10 +30,31 @@ GLOBE.Gameplay.prototype.reset = function() {
 		this.network[i].resource = null;
 	}
 
+	var colors = [];
+
 	for(i=0; i<this.network.length; i++){
-		pn = PerlinNoise.noise(this.network[i].position.x, this.network[i].position.y, this.network[i].position.z);
-		pn = Math.cos(pn * 85);
-		this.network[i].resource = Math.round(( (pn * 255) + 255 ));
+		noise = PerlinNoise.noise(this.network[i].position.x, this.network[i].position.y, this.network[i].position.z);
+		noise = Math.cos(noise * 85);
+		this.network[i].resource = Math.max(noise*8.0-2.0, 0.0);
+		colors[i] = new THREE.Color();
+		colors[i].setHSV (0.7, 1.0, 1-noise);
+	}
+
+	var faces = this.scene.geometry.faces;
+	for(i=0; i<faces.length; i++) {
+		var face=faces[i];
+		var vertexSet = [];
+		if(face instanceof THREE.Face3) {
+			vertexSet = [face.a, face.b, face.c];
+		} else if(face instanceof THREE.Face4) {
+			vertexSet = [face.a, face.b, face.c, face.d];
+		}
+
+		for(j=0; j<vertexSet.length; j++) {
+			face.vertexColors[j]=colors[vertexSet[j]];
+		}
+
+		face.color=new THREE.Color( 0x0000ff );
 	}
 }
 

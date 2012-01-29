@@ -18,7 +18,7 @@ GLOBE.ConnectivityModifier.prototype.modify = function(geometry) {
 	
 	for (i=0; i<faces.length; i++) {
 		var face=faces[i];
-		var vertexSet = null;
+		var vertexSet = [];
 		if(face instanceof THREE.Face3) {
 			vertexSet = [face.a, face.b, face.c];
 		} else if(face instanceof THREE.Face4) {
