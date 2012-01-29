@@ -1,10 +1,5 @@
 class StaticPagesController < ApplicationController
-  def home
-  end
-
-  def help
-  end
-
-  def about
+  def show
+  	render :action => params[:page]
   end
 end
