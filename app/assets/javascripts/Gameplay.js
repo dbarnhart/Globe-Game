@@ -31,6 +31,13 @@ GLOBE.Gameplay.prototype.reset = function() {
 
 		this.network[i].building=null;
 		this.network[i].joins = [];
+		this.network[i].resource = null;
+	}
+
+	for(i=0; i<this.network.length; i++){
+		pn = PerlinNoise.noise(this.network[i].position.x, this.network[i].position.y, this.network[i].position.z);
+		pn = Math.cos(pn * 85);
+		console.log(this.network[i].resource = Math.round(( (pn * 255) + 255 )));
 	}
 }
 

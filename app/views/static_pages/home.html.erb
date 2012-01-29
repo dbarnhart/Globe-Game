@@ -56,7 +56,7 @@
       spherical.modify(geometry);
       connectivity = new GLOBE.ConnectivityModifier();
       network = connectivity.modify(geometry);
-      material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
+      material = new THREE.MeshLambertMaterial( { vertexColors: true } );
       globe = new THREE.Mesh( geometry, material );
       scene.add( globe );
 
