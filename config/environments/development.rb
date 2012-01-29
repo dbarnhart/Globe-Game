@@ -34,4 +34,7 @@ RailsTest::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Ensure output is written to stdout immediately
+  $stdout.sync = true
 end
