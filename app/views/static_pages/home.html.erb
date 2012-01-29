@@ -1,5 +1,6 @@
 <% provide(:title, 'Home') %>
 <div>
+  <div style="text-align:right">Manufactured Goods: <span id="manufactured-goods">0</span> |||||| Pollution: <span id="pollution">0</span></div>
 	<%= link_to "Start the Game!", '#', id: "start-button", class: "start_button button orange" %>
 	<div id="view-element", style="display:none"></div>
 </div>
@@ -111,6 +112,11 @@
       // note: three.js includes requestAnimationFrame shim
       requestAnimationFrame( animate );
       trackball.update();
+      gameplay.update();
+
+      $('#manufactured-goods').text(gameplay.state.manufactured_goods);
+      $('#pollution').text(gameplay.state.pollution);
+
       render();
   }
 
